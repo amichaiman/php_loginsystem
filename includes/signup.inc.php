@@ -14,18 +14,11 @@ if (isset($_POST['submit'])){
 
 	//Error handlers
 	//check for empty fields
-	if (empty($first) || empty($last)|| empty(email)|| empty($uid)|| empty($pwd)){
-		go_back_to_main("signup=empty");
-	}
-
-
-	//check if input characters are valid
-	if (!preg_match("/^[a-zA-Z]*$/",$first) || !preg_match("/^[a-zA-Z]*$/",$last)){
+	if (empty($first) || empty($last)|| empty($email)|| empty($uid)|| empty($pwd)){
+		go_back_to_main("empty");
+	} elseif (!preg_match("/^[a-zA-Z]*$/",$first) || !preg_match("/^[a-zA-Z]*$/",$last)){
 		go_back_to_main("invalid");
-	}
-
-	//check that email is valid
-	if (!filter_var($email,FILTER_VALIDATE_EMAIL)){
+	} elseif(!filter_var($email,FILTER_VALIDATE_EMAIL)){
 		go_back_to_main("email");
 	}
 
