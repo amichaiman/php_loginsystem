@@ -5,7 +5,10 @@ if (isset($_POST['submit'])){
 
 	include_once 'dbh.inc.php';
 
-	$first = $_POST['first'];
+	if ($conn == null){
+		go_back_to_main("itsnull");
+	}
+	$first = mysqli_real_escape_string($conn,$_POST['first']);
 	$last = $_POST['last'];
 	$email = $_POST['email'];
 	$uid = $_POST['uid'];
@@ -35,10 +38,10 @@ if (isset($_POST['submit'])){
 	$hashed_password = password_hash($pwd, PASSWORD_DEFAULT);
 
 	//insert the user to the database
-	$sql = "INSERT INTO users (user_first, user_last, user_email,user_uid, user_psw) 
-			VALUES ($first, $last, $email, $uid, $hashed_password);";
-	if (!mysqli_query($conn, $sql));
-	{
+	$sql = "INSERT INTO users (user_first, user_last, user_email,user_uid, user_pwd) 
+			VALUES ('$first','$last','$email','$uid','$hashed_password'))";
+
+	if (mysqli_query($conn,$sql) == false){
 		go_back_to_main("nope");
 	}
 	go_back_to_main("success");
