@@ -5,11 +5,11 @@ if (isset($_POST['submit'])){
 
 	include_once 'dbh.inc.php';
 
-	$first = mysqli_real_escape_string($conn,$_POST['submit']);
-	$last = mysqli_real_escape_string($conn,$_POST['last']);
-	$email = mysqli_real_escape_string($conn,$_POST['email']);
-	$uid = mysqli_real_escape_string($conn,$_POST['uid']);
-	$pwd = mysqli_real_escape_string($conn,$_POST['pwd']);
+	$first = $_POST['first'];
+	$last = $_POST['last'];
+	$email = $_POST['email'];
+	$uid = $_POST['uid'];
+	$pwd = $_POST['pwd'];
 
 
 	//Error handlers
@@ -37,7 +37,10 @@ if (isset($_POST['submit'])){
 	//insert the user to the database
 	$sql = "INSERT INTO users (user_first, user_last, user_email,user_uid, user_psw) 
 			VALUES ($first, $last, $email, $uid, $hashed_password);";
-	mysqli_query($conn, $sql);
+	if (!mysqli_query($conn, $sql));
+	{
+		go_back_to_main("nope");
+	}
 	go_back_to_main("success");
 } else {
 	go_back_to_main("");
